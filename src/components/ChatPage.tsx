@@ -23,7 +23,7 @@ const ChatPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedAgentId) {
+    if (selectedAgentId && selectedAgentId !== '') {
       const agentId = parseInt(selectedAgentId);
       const history = chatHistories.find(h => h.agent_id === agentId);
       setMessages(history ? history.messages : []);
@@ -36,7 +36,7 @@ const ChatPage: React.FC = () => {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim() || !selectedAgentId || isLoading) return;
+    if (!message.trim() || !selectedAgentId || isLoading || selectedAgentId === '') return;
 
     const agentId = parseInt(selectedAgentId);
     const userMessage: ChatMessage = {
@@ -115,7 +115,7 @@ const ChatPage: React.FC = () => {
         </Card>
 
         {/* Chat Area */}
-        {selectedAgentId ? (
+        {selectedAgentId && selectedAgentId !== '' ? (
           <Card className="flex-1 flex flex-col">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center">
